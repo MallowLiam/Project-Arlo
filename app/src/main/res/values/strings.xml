@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Arlo</string>
+    <string name="app_description">AI-Powered Personal Assistant</string>
+
+    <!-- Main Screen -->
+    <string name="status_ready">Arlo AI is ready</string>
+    <string name="status_learning">Learning your behavior patterns...</string>
+    <string name="status_organizing">Organizing apps and files...</string>
+    <string name="status_photos">Managing photos...</string>
+
+    <!-- Buttons -->
+    <string name="btn_start_learning">Start Learning</string>
+    <string name="btn_organize">Organize</string>
+    <string name="btn_manage_photos">Manage Photos</string>
+
+    <!-- Features -->
+    <string name="feature_app_organization">App Organization</string>
+    <string name="feature_file_management">File Management</string>
+    <string name="feature_photo_management">Photo Management</string>
+    <string name="feature_behavior_learning">Behavior Learning</string>
+
+    <!-- Settings -->
+    <string name="settings_privacy">Privacy Settings</string>
+    <string name="settings_ai">AI Settings</string>
+    <string name="settings_about">About Arlo</string>
+</resources>
