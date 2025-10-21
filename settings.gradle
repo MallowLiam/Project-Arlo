@@ -16,3 +16,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Arlo"
 include ':app'
+include ':arlo-sdk'
+include ':sample-app'

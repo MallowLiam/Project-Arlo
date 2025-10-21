@@ -1,6 +1,10 @@
 # Project Arlo
 
-An Android-based AI system that learns user behaviour, organises apps and files, manages photos, and adapts to new apps autonomously. Built for seamless personal assistance, privacy, and evolving intelligence.
+An Android SDK for AI-powered personal assistance that learns user behaviour, organises apps and files, manages photos, and adapts to new apps autonomously. Built for seamless integration, privacy-first processing, and evolving intelligence.
+
+## 🚀 Now Available as SDK!
+
+Project Arlo is now packaged as an Android SDK library that you can integrate into your own applications. See the [SDK Documentation](SDK_DOCUMENTATION.md) for integration guide.
 
 ## Features
 
@@ -26,38 +30,74 @@ An Android-based AI system that learns user behaviour, organises apps and files,
 
 ```
 Project-Arlo/
-├── app/
-│   ├── src/
-│   │   └── main/
-│   │       ├── java/com/arlo/app/
-│   │       │   ├── ArloApplication.kt
-│   │       │   ├── MainActivity.kt
-│   │       │   ├── service/
-│   │       │   │   └── ArloLearningService.kt
-│   │       │   └── ui/theme/
-│   │       │       ├── Theme.kt
-│   │       │       └── Type.kt
-│   │       ├── res/
-│   │       │   ├── values/
-│   │       │   ├── layout/
-│   │       │   └── drawable/
-│   │       └── AndroidManifest.xml
+├── arlo-sdk/                      # SDK Library Module
+│   ├── src/main/
+│   │   ├── java/com/arlo/sdk/
+│   │   │   ├── ArloSDK.kt        # Main SDK entry point
+│   │   │   ├── ArloConfig.kt     # Configuration
+│   │   │   ├── ai/
+│   │   │   │   └── ArloAIEngine.kt
+│   │   │   ├── learning/
+│   │   │   │   └── BehaviorAnalyzer.kt
+│   │   │   └── ui/
+│   │   │       └── ArloStatusCard.kt
+│   │   └── AndroidManifest.xml
+│   ├── build.gradle              # Library build config
+│   └── README.md
+├── sample-app/                    # Sample Integration App
+│   ├── src/main/
+│   │   ├── java/com/arlo/sample/
+│   │   │   ├── SampleApplication.kt
+│   │   │   └── MainActivity.kt
+│   │   └── AndroidManifest.xml
 │   └── build.gradle
+├── app/                           # Original Standalone App
+│   ├── src/main/
+│   │   ├── java/com/arlo/app/
+│   │   └── AndroidManifest.xml
+│   └── build.gradle
+├── SDK_DOCUMENTATION.md           # Complete SDK docs
 ├── build.gradle
 ├── settings.gradle
 └── README.md
 ```
 
-## Getting Started
+## Quick Start
 
-### Prerequisites
+### For App Developers (Using the SDK)
+
+See [SDK Documentation](SDK_DOCUMENTATION.md) for integration guide.
+
+**Quick integration:**
+
+```kotlin
+// 1. Add dependency
+dependencies {
+    implementation 'com.arlo:arlo-sdk:1.0.0'
+}
+
+// 2. Initialize in your Application
+class MyApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        ArloSDK.initialize(this)
+    }
+}
+
+// 3. Use SDK features
+ArloSDK.startLearning()
+```
+
+### For SDK Developers (Building from Source)
+
+#### Prerequisites
 
 - Android Studio Hedgehog (2023.1.1) or newer
 - JDK 17 or newer
 - Android SDK 34
 - Gradle 8.4 or newer
 
-### Building the Project
+#### Building the SDK Library
 
 1. Clone the repository:
 ```bash
@@ -72,29 +112,44 @@ cd Project-Arlo
    - Android Studio should automatically sync Gradle
    - Or manually: File > Sync Project with Gradle Files
 
-4. Build the project:
+4. Build the SDK library:
 ```bash
-./gradlew build
+# Build SDK AAR
+./gradlew :arlo-sdk:assembleRelease
+
+# Publish to local Maven
+./gradlew :arlo-sdk:publishToMavenLocal
 ```
 
-5. Run on an emulator or device:
-   - Click the "Run" button in Android Studio
-   - Or use: `./gradlew installDebug`
+5. Run the sample app:
+```bash
+# Install sample app
+./gradlew :sample-app:installDebug
 
-### Running from Command Line
+# Or run from Android Studio
+# Select "sample-app" configuration and click Run
+```
+
+### Building Different Modules
 
 ```bash
-# Build debug APK
-./gradlew assembleDebug
+# Build SDK library only
+./gradlew :arlo-sdk:build
 
-# Build release APK
-./gradlew assembleRelease
+# Build sample app
+./gradlew :sample-app:assembleDebug
 
-# Install on connected device
-./gradlew installDebug
+# Build original standalone app
+./gradlew :app:assembleDebug
 
-# Run tests
+# Run all tests
 ./gradlew test
+
+# Publish SDK to local Maven repository
+./gradlew :arlo-sdk:publishToMavenLocal
+
+# Publish to GitHub Packages
+./gradlew :arlo-sdk:publish
 ```
 
 ## Permissions
@@ -110,21 +165,59 @@ The app requires the following permissions:
 
 ## Development Roadmap
 
+### SDK
+- [x] Initial SDK architecture
+- [x] Core SDK API (ArloSDK, ArloConfig)
+- [x] AI Engine framework
+- [x] Behavior Analyzer framework
+- [x] Jetpack Compose UI components
+- [x] Maven publishing setup
+- [x] Sample app with integration examples
+- [x] Comprehensive documentation
+- [ ] Implement behavior learning algorithms
+- [ ] Add file organization algorithms
+- [ ] Implement photo management with ML Kit
+- [ ] Add app usage tracking
+- [ ] Integrate TensorFlow Lite models
+- [ ] Add Room database for learning data
+- [ ] Implement WorkManager for background tasks
+- [ ] Add privacy controls and settings
+- [ ] Performance optimization
+- [ ] Unit and integration tests
+
+### Standalone App
 - [x] Initial project setup
 - [x] Basic UI with Jetpack Compose
-- [ ] Implement behavior learning engine
-- [ ] Add file organization algorithms
-- [ ] Implement photo management features
-- [ ] Add app usage tracking
-- [ ] Integrate on-device ML models
-- [ ] Implement privacy controls
-- [ ] Add settings and preferences
-- [ ] Performance optimization
+- [ ] Feature parity with SDK
+- [ ] Advanced UI features
+
+## SDK vs Standalone App
+
+This repository contains:
+
+1. **arlo-sdk**: Android library for integration into other apps
+2. **sample-app**: Demonstrates how to use the SDK
+3. **app**: Original standalone application
+
+Most developers should use the **arlo-sdk** module and refer to **sample-app** for integration examples.
+
+## Documentation
+
+- [SDK Documentation](SDK_DOCUMENTATION.md) - Complete SDK integration guide
+- [SDK README](arlo-sdk/README.md) - Quick SDK overview
+- Sample App - See `sample-app` module for working example
 
 ## License
 
 Copyright 2025 Project Arlo
 
+Licensed under the Apache License, Version 2.0
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Support
+
+- **Issues**: https://github.com/MallowLiam/Project-Arlo/issues
+- **Discussions**: https://github.com/MallowLiam/Project-Arlo/discussions
