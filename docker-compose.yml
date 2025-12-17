@@ -1,0 +1,33 @@
+services:
+  arlo-ai:
+    build: .
+    container_name: arlo_container
+    # This section is critical for NVIDIA GPU access
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      # Mount the current directory to /app in the container
+      - .:/app
+    environment:
+      - VOYAGE_API_KEY=${VOYAGE_API_KEY}
+    # Keep the container running
+    command: tail -f /dev/null
+    ipc: host
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: arlo_frontend
+    ports:
+      - "80:80"
+    environment:
+      # Point this at your backend API (adjust as needed)
+      - VITE_API_URL=${VITE_API_URL:-http://arlo-ai:8000}
+      - API_BACKEND_URL=${API_BACKEND_URL:-http://arlo-ai:8000}
+    depends_on:
+      - arlo-ai
